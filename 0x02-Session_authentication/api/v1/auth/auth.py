@@ -75,20 +75,17 @@ class Auth():
         """
         return None
 
-    def session_cookie(self, request=None) -> str:
-        """Retrieves the session cookie from a request.
+    def session_cookie(self, request=None):
+        """Returns a cookie value from a request"""
 
-        Args:
-            request (flask.request, optional): Request to retrieve the session
-            cookie from. Defaults to None.
+        if request is None:
+            return None
 
-        Returns:
-            str: The value of the session cookie, None if the request or the
-            cookie is invalid.
-        """
-        # If request is not None
-        if request is not None:
-            # Get the name of the session cookie from SESSION_NAME env variable
-            cookie_name = os.getenv('SESSION_NAME')
-            # Return the value of the session cookie
-            return request.cookies.get(cookie_name)
+        SESSION_NAME = getenv("SESSION_NAME")
+
+        if SESSION_NAME is None:
+            return None
+
+        session_id = request.cookies.get(SESSION_NAME)
+
+        return session_id
