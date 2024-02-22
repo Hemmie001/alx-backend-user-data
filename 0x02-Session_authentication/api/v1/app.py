@@ -5,6 +5,7 @@ Route module for the API
 from os import getenv
 from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
+from flask import request
 from flask_cors import (CORS, cross_origin)
 import os
 from api.v1.auth.auth import Auth
@@ -55,6 +56,7 @@ def authenticate_user():
             '/api/v1/unauthorized/',
             '/api/v1/forbidden/',
             '/api/v1/auth_session/login/', ]
+
         if auth.require_auth(request.path, excluded_paths):
             auth_header = auth.authorization_header(request)
             request.current_user = auth.current_user(request)
