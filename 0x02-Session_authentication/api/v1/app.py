@@ -59,19 +59,11 @@ def authenticate_user():
 
         if auth.require_auth(request.path, excluded_paths):
             auth_header = auth.authorization_header(request)
-            user = auth.current_user(request)
-        
-        if auth.authorization_header(request) is None \
-            and auth.session_cookie(request) is None:
-            abort(401)
-        """
-            #if auth_header is None:
-                #abort(401)
-            #if user is None:
-                #abort(403)
-            request.current_user = user
-        """
+            request.current_user = auth.current_user(request)
 
+            if auth_header is None and auth.session_cookie(request) is None:
+                abort(401)
+        
 
 if __name__ == "__main__":
     host = getenv("API_HOST", "0.0.0.0")
