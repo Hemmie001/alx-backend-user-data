@@ -2,7 +2,7 @@
 """Module for authentication"""
 from typing import List, TypeVar
 from flask import request
-
+import os
 
 class Auth():
     """Template for all authentication system implemented in this app.
@@ -74,3 +74,20 @@ class Auth():
         For now, it simply returns None.
         """
         return None
+
+    def session_cookie(self, request=None) -> str:
+        """Gets the value of the session cookie from the request
+
+        Args:
+            request (request, optional): Flask request obj. Defaults to None.
+
+        Returns:
+            str: The value of the session cookie or None if not present.
+        """
+        # If request is None, return None
+        if request is None:
+            return None
+        # Get the session name from environment variable SESSION_NAME
+        session_name = os.getenv('SESSION_NAME', '_my_session_id')
+        # Return the value of the session cookie
+        return request.cookies.get(session_name)
