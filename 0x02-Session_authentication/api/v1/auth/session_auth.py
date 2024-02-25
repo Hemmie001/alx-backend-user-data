@@ -5,8 +5,6 @@ import uuid
 from api.v1.auth.auth import Auth
 from models.user import User
 
-
-
 class SessionAuth(Auth):
     """Session Authentication Class"""
     user_id_by_session_id = {}
@@ -26,6 +24,7 @@ class SessionAuth(Auth):
             return None
 
         return self.user_id_by_session_id.get(session_id)
+
     def current_user(self, request=None):
         """Return a User instance based on a cookie value."""
         if request is None:
