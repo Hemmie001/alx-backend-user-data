@@ -18,11 +18,8 @@ auth = None
 auth_type = getenv('AUTH_TYPE', 'auth')
 if auth_type == 'auth':
     auth = Auth()
-elif auth_type == 'basic_auth':
+if auth_type == 'basic_auth':
     auth = BasicAuth()
-elif auth_type == 'session_auth':
-    from api.v1.auth.session_auth import SessionAuth
-    auth = SessionAuth()
 
 
 @app.errorhandler(401)
@@ -50,30 +47,19 @@ def not_found(error) -> str:
 def authenticate_user():
     """Authenticates a user before processing a request.
     """
-    if auth is None:
-        return
-    # Create list of excluded paths
-    excluded_paths = ['/api/v1/status/',
-                      '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/',
-                      '/api/v1/auth_session/login/']
-    # if request.path is not part of the list above, do nothing
-    # You must use the method require_auth from the auth instance
-    if not auth.require_auth(request.path, excluded_paths):
-        return
-    # If auth.authorization_header(request) and auth.session_cookie(request)
-    # return None, raise the error, 401 - you must use abort
-    auth_header = auth.authorization_header(request)
-    session_cookie = auth.session_cookie(request)
-    if auth_header is None and session_cookie is None:
-        abort(401)
-    # If auth.current_user(request) returns None, raise the error 403 - you
-    # must use abort
-    user = auth.current_user(request)
-    if user is None:
-        abort(403)
-    # Assign the result of auth.current_user(request) to request.current_user
-    request.current_user = user
+    if auth:
+        excluded_paths = [
+            '/api/v1/status/',
+            '/api/v1/unauthorized/',
+            '/api/v1/forbidden/',
+        ]
+        if auth.require_auth(request.path, excluded_paths):
+            auth_header = auth.authorization_header(request)
+            user = auth.current_user(request)
+            if auth_header is None:
+                abort(401)
+            if user is None:
+                abort(403)
 
 
 if __name__ == "__main__":
