@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+This module contains views for Session
+authentication routes
+"""
+
 from flask import request, jsonify, abort
 from api.v1.app import auth
 from models.user import User
