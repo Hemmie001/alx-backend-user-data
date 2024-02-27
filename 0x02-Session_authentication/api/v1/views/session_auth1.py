@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Module for session authenticating views.
+"""
+This module contains views for Session
+authentication routes.
 """
 
 
