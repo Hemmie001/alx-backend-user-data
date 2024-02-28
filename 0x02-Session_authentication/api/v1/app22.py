@@ -11,23 +11,17 @@ import os
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 
-# Import SessionAuth if AUTH_TYPE is set to session_auth
-auth_type = getenv('AUTH_TYPE', 'auth')
-if auth_type == 'session_auth':
-    from api.v1.auth.session_auth import SessionAuth
 
 app = Flask(__name__)
 app.register_blueprint(app_views)
 CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
-
-# Initialize auth variable based on AUTH_TYPE
+auth = None
+auth_type = getenv('AUTH_TYPE', 'auth')
 if auth_type == 'auth':
     auth = Auth()
-elif auth_type == 'basic_auth':
+if auth_type == 'basic_auth':
     auth = BasicAuth()
-elif auth_type == 'session_auth':
-    auth = SessionAuth()
- 
+
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:
