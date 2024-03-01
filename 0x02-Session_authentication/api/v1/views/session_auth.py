@@ -32,3 +32,15 @@ def get_user_for_session_auth():
             resp.set_cookie(cookie, session)
             return resp
     return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'], strict_slashes=False)
+def delete_user_session():
+    """
+    Deletes user session
+    """
+    from api.v1.app import auth
+    if not auth.destroy_session(request):
+        abort(404)
+    return jsonify({}), 200
