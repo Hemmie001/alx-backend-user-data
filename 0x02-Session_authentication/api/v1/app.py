@@ -27,6 +27,8 @@ elif auth_type == 'basic_auth':
     auth = BasicAuth()
 elif auth_type == 'session_auth':
     auth = SessionAuth()
+elif auth_type == 'session_exp_auth':  # Add this condition
+    auth = SessionExpAuth() 
 
 
 @app.errorhandler(401)
