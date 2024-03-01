@@ -10,6 +10,7 @@ from os import getenv
 
 app_views = Blueprint('app_views', __name__)
 
+
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 @app_views.route('/auth_session/login/', methods=['POST'], strict_slashes=False)
 def login():
