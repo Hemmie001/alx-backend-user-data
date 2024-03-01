@@ -2,7 +2,7 @@
 """ Module of Session authentication views
 """
 from api.v1.views import app_views
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, Blueprint
 from models.user import User
 from os import getenv
 
