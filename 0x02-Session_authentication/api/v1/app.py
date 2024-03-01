@@ -11,6 +11,7 @@ import os
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
 from api.v1.auth.session_exp_auth import SessionExpAuth
+from api.v1.auth.session_db_auth import SessionDBAuth
 
 # Import SessionAuth if AUTH_TYPE is set to session_auth
 auth_type = getenv('AUTH_TYPE', 'auth')
@@ -29,7 +30,9 @@ elif auth_type == 'basic_auth':
 elif auth_type == 'session_auth':
     auth = SessionAuth()
 elif auth_type == 'session_exp_auth':  # Add this condition
-    auth = SessionExpAuth() 
+    auth = SessionExpAuth()
+elif auth_type == 'session_db_auth':  # Add this condition
+    auth = SessionDBAuth()
 
 
 @app.errorhandler(401)
