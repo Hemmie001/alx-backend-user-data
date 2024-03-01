@@ -10,6 +10,7 @@ import os
 # Import the necessary authentication classes
 from api.v1.auth.auth import Auth
 from api.v1.auth.basic_auth import BasicAuth
+from api.v1.auth.session_exp_auth import SessionExpAuth
 
 # Import SessionAuth if AUTH_TYPE is set to session_auth
 auth_type = getenv('AUTH_TYPE', 'auth')
